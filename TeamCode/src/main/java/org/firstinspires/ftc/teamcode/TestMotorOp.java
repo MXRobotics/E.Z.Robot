@@ -62,8 +62,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Omni Linear OpMode", group="Linear OpMode")
-public class TestTeleOp extends LinearOpMode {
+@TeleOp(name="Basic: Test Motors", group="Linear OpMode")
+public class TestMotorOp extends LinearOpMode {
 
     // Declare OpMode members for each of the 4 motors.
     private ElapsedTime runtime = new ElapsedTime();
@@ -71,6 +71,10 @@ public class TestTeleOp extends LinearOpMode {
     private DcMotor leftBackDrive = null;
     private DcMotor rightFrontDrive = null;
     private DcMotor rightBackDrive = null;
+
+    private DcMotor leftSlideMotor = null;
+    private DcMotor rightSlideMotor = null;
+    private DcMotor intakeMotor = null;
 
     @Override
     public void runOpMode() {
@@ -81,6 +85,9 @@ public class TestTeleOp extends LinearOpMode {
         leftBackDrive  = hardwareMap.get(DcMotor.class, "leftBack");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFront");
         rightBackDrive = hardwareMap.get(DcMotor.class, "rightBack");
+        leftSlideMotor = hardwareMap.get(DcMotor.class, "leftSlide");
+        rightSlideMotor = hardwareMap.get(DcMotor.class, "rightSlide");
+        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
 
         // ########################################################################################
         // !!!            IMPORTANT Drive Information. Test your motor directions.            !!!!!
@@ -106,59 +113,44 @@ public class TestTeleOp extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
-            double max;
+            double leftFrontPower;
+            double rightFrontPower;
+            double leftBackPower;
+            double rightBackPower;
+            double leftSlidePower;
+            double rightSlidePower;
+            double intakePower;
 
-            // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
-            double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-            double lateral =  gamepad1.left_stick_x;
-            double yaw     =  gamepad1.right_stick_x;
 
-            // Combine the joystick requests for each axis-motion to determine each wheel's power.
-            // Set up a variable for each drive wheel to save the power level for telemetry.
-            double leftFrontPower  = axial + lateral + yaw;
-            double rightFrontPower = axial - lateral - yaw;
-            double leftBackPower   = axial - lateral + yaw;
-            double rightBackPower  = axial + lateral - yaw;
-
-            // Normalize the values so no wheel power exceeds 100%
-            // This ensures that the robot maintains the desired motion.
-            max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
-            max = Math.max(max, Math.abs(leftBackPower));
-            max = Math.max(max, Math.abs(rightBackPower));
-
-            if (max > 1.0) {
-                leftFrontPower  /= max;
-                rightFrontPower /= max;
-                leftBackPower   /= max;
-                rightBackPower  /= max;
-            }
-
-            // This is test code:
-            //
-            // Uncomment the following code to test your motor directions.
-            // Each button should make the corresponding motor run FORWARD.
-            //   1) First get all the motors to take to correct positions on the robot
-            //      by adjusting your Robot Configuration if necessary.
-            //   2) Then make sure they run in the correct direction by modifying the
-            //      the setDirection() calls above.
-            // Once the correct motors move in the correct direction re-comment this code.
-
-            /*
             leftFrontPower  = gamepad1.x ? 1.0 : 0.0;  // X gamepad
             leftBackPower   = gamepad1.a ? 1.0 : 0.0;  // A gamepad
             rightFrontPower = gamepad1.y ? 1.0 : 0.0;  // Y gamepad
             rightBackPower  = gamepad1.b ? 1.0 : 0.0;  // B gamepad
-            */
+            leftSlidePower  = gamepad1.left_bumper ? 1.0 : 0.0;  // Left bumper
+            rightSlidePower = gamepad1.right_bumper ? 1.0 : 0.0;  // Right bumper
+            intakePower     = gamepad1.left_trigger;  // Left trigger
+            // left and right slide motors if right trigger
+            leftSlidePower = gamepad1.left_trigger;  // Left trigger
+            rightSlidePower = gamepad1.right_trigger;  // Right trigger
+
+
+
             // Send calculated power to wheels
             leftFrontDrive.setPower(leftFrontPower);
             rightFrontDrive.setPower(rightFrontPower);
             leftBackDrive.setPower(leftBackPower);
             rightBackDrive.setPower(rightBackPower);
+            leftSlideMotor.setPower(leftSlidePower);
+            rightSlideMotor.setPower(rightSlidePower);
+            intakeMotor.setPower(intakePower);
+
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Front left/Right", "%4.2f, %4.2f", leftFrontPower, rightFrontPower);
             telemetry.addData("Back  left/Right", "%4.2f, %4.2f", leftBackPower, rightBackPower);
+            telemetry.addData("Slide left/Right", "%4.2f, %4.2f", leftSlidePower, rightSlidePower);
+            telemetry.addData("Intake", "%4.2f", intakePower);
             telemetry.update();
         }
     }}
