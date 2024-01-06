@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /*
@@ -102,6 +103,7 @@ public class BasicTeleOp extends LinearOpMode {
         leftBackDrive.setDirection(DcMotor.Direction.REVERSE);
         rightFrontDrive.setDirection(DcMotor.Direction.FORWARD);
         rightBackDrive.setDirection(DcMotor.Direction.FORWARD);
+        intakeMotor.setDirection(DcMotor.Direction.REVERSE);
 
         // Wait for the game to start (driver presses PLAY)
         telemetry.addData("Status", "Initialized");
@@ -160,6 +162,11 @@ public class BasicTeleOp extends LinearOpMode {
             // left and right slide motors if right trigger
             leftSlidePower = gamepad1.left_trigger;  // Left trigger
             rightSlidePower = gamepad1.right_trigger;  // Right trigger
+
+            leftSlidePower  = gamepad1.a ? 1.0 : 0.0;  // Left bumper
+            rightSlidePower = gamepad1.b? 1.0 : 0.0;  // Right bumper
+            intakePower     = gamepad1.x? 1.0 : 0.0;  // Left trigger
+
 
             // Send calculated power to wheels
             leftFrontDrive.setPower(leftFrontPower);
