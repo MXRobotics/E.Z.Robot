@@ -21,6 +21,13 @@ android {
     packagingOptions {
         jniLibs.useLegacyPackaging true
     }
+    sourceSets {
+        main {
+            java {
+                srcDirs 'src/main/java', 'TeamCode/src/main/java/org/firstinspires/ftc/teamcode/common', 'src/main/java/org/firstinspires/ftc/teamcode/common/ ', 'src/main/java/org/firstinspires/ftc/teamcode/opmode', 'src/main/java/org/firstinspires/ftc/teamcode/common', 'src/main/java/org/firstinspires/ftc/teamcode/opmode/auto', 'src/main/java/org/firstinspires/ftc/teamcode/opmode/teleop'
+            }
+        }
+    }
 }
 
 dependencies {
