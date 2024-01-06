@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice;
 public class Encoder implements HardwareDevice {
      public Motor.Encoder encoder;
 
-    public WEncoder(Motor.Encoder encoder) {
+    public Encoder(Motor.Encoder encoder) {
         this.encoder = encoder;
     }
 

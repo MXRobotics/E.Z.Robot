@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common.hardware;
 
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,7 +12,12 @@ import org.firstinspires.ftc.teamcode.common.util.wrappers.Encoder;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@Config
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+
+
 public class RobotHardware {
 
     // motors
@@ -57,6 +63,7 @@ public class RobotHardware {
     private static RobotHardware instance = null;
     public boolean enabled;
 
+
     public static RobotHardware getInstance() {
         if (instance == null) {
             instance = new RobotHardware();
@@ -67,7 +74,7 @@ public class RobotHardware {
 
      public void init(final HardwareMap hardwareMap, final Telemetry telemetry) {
         this.hardwareMap = hardwareMap;
-        this.values = new HashMap<>();
+//        this.values = new HashMap<>();
         this.telemetry = telemetry;
 
         // Drivetrain motors and encoders
@@ -88,10 +95,10 @@ public class RobotHardware {
         rightBackMotor.setDirection(DcMotorEx.Direction.FORWARD);
         rightBackMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         
-        leftFrontEncoder = new Encoder(leftFrontMotor.encoder);
-        leftBackEncoder = new Encoder(leftBackMotor.encoder);
-        rightFrontEncoder = new Encoder(rightFrontMotor.encoder);
-        rightBackEncoder = new Encoder(rightBackMotor.encoder);
+        leftFrontEncoder = new Encoder(new MotorEx(hardwareMap, "leftFront").encoder);
+        leftBackEncoder = new Encoder(new MotorEx(hardwareMap, "leftBack").encoder);
+        rightFrontEncoder = new Encoder(new MotorEx(hardwareMap, "rightFront").encoder);
+        rightBackEncoder = new Encoder(new MotorEx(hardwareMap, "rightBack").encoder);
 
         // Intake motor and encoder
 
@@ -99,7 +106,7 @@ public class RobotHardware {
         intakeMotor.setDirection(DcMotorEx.Direction.FORWARD);
         intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-        intakeEncoder = new Encoder(intakeMotor.encoder);
+        intakeEncoder = new Encoder(new MotorEx(hardwareMap, "intakeMotor").encoder);
 
         // Slide motors
 
@@ -113,8 +120,8 @@ public class RobotHardware {
 
         // Odometry encoders
 
-        rightOdoEncoder = new Encoder(rightSlide.encoder);
-        leftOdoEncoder = new Encoder(leftSlide.encoder);
+        rightOdoEncoder = new Encoder(new MotorEx(hardwareMap, "rightSlide").encoder);
+        leftOdoEncoder = new Encoder(new MotorEx(hardwareMap, "leftSlide").encoder);
         centerOdoEncoder = new Encoder(new MotorEx(hardwareMap, "centerOdo").encoder);
 
 
@@ -126,25 +133,25 @@ public class RobotHardware {
         }
 
         // Drivetrain motors and encoders
-
-        leftFrontMotor.setPower(values.get("leftFrontMotor"));
-        leftBackMotor.setPower(values.get("leftBackMotor"));
-        rightFrontMotor.setPower(values.get("rightFrontMotor"));
-        rightBackMotor.setPower(values.get("rightBackMotor"));
-
-        // Intake motor and encoder
-
-        intakeMotor.setPower(values.get("intakeMotor"));
-
-        // Slide motors
-
-        leftSlide.setPower(values.get("leftSlide"));
-        rightSlide.setPower(values.get("rightSlide"));
-
-        // Odometry encoders
-
-        rightOdoEncoder.setPower(values.get("rightOdoEncoder"));
-        leftOdoEncoder.setPower(values.get("leftOdoEncoder"));
-        centerOdoEncoder.setPower(values.get("centerOdoEncoder"));
+//
+//        leftFrontMotor.setPower(values.get("leftFrontMotor"));
+//        leftBackMotor.setPower(values.get("leftBackMotor"));
+//        rightFrontMotor.setPower(values.get("rightFrontMotor"));
+//        rightBackMotor.setPower(values.get("rightBackMotor"));
+//
+//        // Intake motor and encoder
+//
+//        intakeMotor.setPower(values.get("intakeMotor"));
+//
+//        // Slide motors
+//
+//        leftSlide.setPower(values.get("leftSlide"));
+//        rightSlide.setPower(values.get("rightSlide"));
+//
+//        // Odometry encoders
+//
+//        rightOdoEncoder.setPower(values.get("rightOdoEncoder"));
+//        leftOdoEncoder.setPower(values.get("leftOdoEncoder"));
+//        centerOdoEncoder.setPower(values.get("centerOdoEncoder"));
      }
 }
