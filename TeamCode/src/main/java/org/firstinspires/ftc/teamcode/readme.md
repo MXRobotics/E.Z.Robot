@@ -1,3 +1,5 @@
+# This is the teamcode for E.Z.'s 2023-2024 season
+
 ## TeamCode Module
 
 Welcome!
