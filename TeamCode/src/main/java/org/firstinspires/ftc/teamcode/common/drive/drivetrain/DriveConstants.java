@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.drive;
+package org.firstinspires.ftc.teamcode.common.drive.drivetrain;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
@@ -104,5 +104,9 @@ public class DriveConstants {
     public static double getMotorVelocityF(double ticksPerSecond) {
       // see https://docs.google.com/document/d/1tyWrXDfMidwYyP_5H4mZyVgaEswhOC35gvdmP-V-5hA/edit#heading=h.61g9ixenznbx
       return 32767 / ticksPerSecond;
+    }
+
+    public static double inchesToEncoderTicks(double inches) {
+        return (inches * TICKS_PER_REV) / (2 * WHEEL_RADIUS * Math.PI * GEAR_RATIO);
     }
 }

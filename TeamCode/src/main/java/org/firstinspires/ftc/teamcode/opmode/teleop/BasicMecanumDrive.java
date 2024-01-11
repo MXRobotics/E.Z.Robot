@@ -14,6 +14,7 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -30,7 +31,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 
 
-
+@Disabled
 @TeleOp(name="Basic Mecanum Drive", group="Linear OpMode")
 public class BasicMecanumDrive extends LinearOpMode {
 
